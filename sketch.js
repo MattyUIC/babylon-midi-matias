@@ -1,8 +1,11 @@
 //https://editor.p5js.org/howshekilledit/sketches/P00w6cEmL
 let piano_init = false;
 
-//default function plays note on keypress
+var notes = ['F', 'E', 'G', 'A', 'B', 'C'];
+var colors = ["#f44336", "#ce7e00", "#8fce00", "#2986cc", "#6a329f", "#c90076"]
+var circles = [];
 
+//default function plays note on keypress
 function triggerNote(note, midi = true) {
     if (piano_init == false) {
         Tone.start();
@@ -10,13 +13,45 @@ function triggerNote(note, midi = true) {
         piano_init = true;
     }
     //you can add your own functionality here.
+    console.log(note.name)
+    switch(note.name){
+        case 'F':
+            console.log(circles[0])
+            circles[0].position.y += 5;
+        break;
+        case 'E':
+            console.log(circles[1])
+            circles[1].position.y += 5;
+
+        break;
+        case 'G':
+            console.log(circles[2])
+            circles[2].position.y += 5;
+
+        break;
+        case 'A':
+            console.log(circles[3])
+            circles[3].position.y += 5;
+
+        break;
+        case 'B':
+            console.log(circles[4])
+            circles[4].position.y += 5;
+
+        break;
+        case 'C':
+            console.log(circles[5])
+            circles[5].position.y += 5;
+
+        break;
+    }
 
     //displays note name in browser (you can remove this line)
     document.getElementById('txt').innerText = note.name + note.octave;
 
     synth.triggerAttack(note.name + note.octave);
 
-
+    console.log(note)
 
     //Show what we are receiving
     console.log(
@@ -32,6 +67,38 @@ function triggerNote(note, midi = true) {
 function stopNote(note) {
     //stop note
     synth.triggerRelease(note.name + note.octave);
+
+    switch(note.name){
+        case 'F':
+            console.log(circles[0])
+            circles[0].position.y -= 5;
+        break;
+        case 'E':
+            console.log(circles[1])
+            circles[1].position.y -= 5;
+
+        break;
+        case 'G':
+            console.log(circles[2])
+            circles[2].position.y -= 5;
+
+        break;
+        case 'A':
+            console.log(circles[3])
+            circles[3].position.y -= 5;
+
+        break;
+        case 'B':
+            console.log(circles[4])
+            circles[4].position.y -= 5;
+
+        break;
+        case 'C':
+            console.log(circles[5])
+            circles[5].position.y -= 5;
+
+        break;
+    }
 
     //Show what we are receiving
     console.log(
@@ -84,6 +151,11 @@ function setup() {
     var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
     light.intensity = 1;
 
+    for(i = 0; i<6; i++){
+        circles.push( createSphere(-2+i*5, 1, 0 , 5));
+        circles[i].material = hexMat(colors[i]);
+    }
+    console.log(circles)
 
     synth = new Tone.PolySynth(Tone.MonoSynth, {
         volume: -8,
